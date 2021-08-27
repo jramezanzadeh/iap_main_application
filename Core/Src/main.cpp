@@ -89,6 +89,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+  //Interrupts are disabled in the bootlaoder, so we must enable them ASAP
   __enable_irq();
   /* USER CODE END SysInit */
 
