@@ -30,7 +30,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Debug.h"
+#include "DataTerminal.hpp"
+#include "LedManager.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -87,34 +89,30 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  __enable_irq();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_CAN1_Init();
-  MX_IWDG_Init();
-  MX_TIM3_Init();
-  MX_USART2_UART_Init();
-  MX_SPI1_Init();
-  MX_SPI2_Init();
-  MX_SPI4_Init();
-  MX_USART6_UART_Init();
-  MX_USART1_UART_Init();
-  MX_UART8_Init();
-  MX_RNG_Init();
-  /* USER CODE BEGIN 2 */
 
+  /* USER CODE BEGIN 2 */
+  debuger << "Starting App ..." << endl;
+  dataTerminal.init();
+  ledManager.blink(LedManager::TX, 1000); //blink every 1 sec
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  debuger.enableBuffering();
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  debuger.run();
+	  dataTerminal.run();
+	  ledManager.run();
   }
   /* USER CODE END 3 */
 }
